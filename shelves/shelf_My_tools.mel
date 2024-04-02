@@ -33,7 +33,7 @@ global proc shelf_My_tools () {
         -style "iconOnly" 
         -marginWidth 1
         -marginHeight 1
-        -command "import maya.cmds as cmds\n\nsel = cmds.ls(sl=1)\n\nfor obj in sel:\n    get_top_parent = cmds.listRelatives(obj,p=1,f=1)[0].split('|')[1]\n    all_descendents = cmds.listRelatives(get_top_parent,ad=1)\n    jnts = cmds.ls(all_descendents, type='joint')\n\nfor jnt in jnts:\n    if cmds.getAttr(\"{}.drawStyle\".format(jnt)) == 0:\n        cmds.setAttr(\"{}.drawStyle\".format(jnt), 2)\n    else:\n        cmds.setAttr(\"{}.drawStyle\".format(jnt), 0)\n" 
+        -command "\"\"\"\nThis script toggles the drawing style of joints in the scene.\n\nUsage:\n1. Select the objects you want to affect in the Maya scene.\n2. Run the script.\n\"\"\"\n\nimport maya.cmds as cmds\n\nsel = cmds.ls(sl=1)\n\nfor obj in sel:\n    get_top_parent = cmds.listRelatives(obj,p=1,f=1)[0].split('|')[1]\n    all_descendents = cmds.listRelatives(get_top_parent,ad=1)\n    jnts = cmds.ls(all_descendents, type='joint')\n\nfor jnt in jnts:\n    if cmds.getAttr(\"{}.drawStyle\".format(jnt)) == 0:\n        cmds.setAttr(\"{}.drawStyle\".format(jnt), 2)\n    else:\n        cmds.setAttr(\"{}.drawStyle\".format(jnt), 0)\n" 
         -sourceType "python" 
         -commandRepeatable 1
         -flat 1
