@@ -33,7 +33,41 @@ global proc shelf_My_tools () {
         -style "iconOnly" 
         -marginWidth 1
         -marginHeight 1
-        -command "\"\"\"\nThis script toggles the drawing style of joints in the scene.\n\nUsage:\n1. Select the objects you want to affect in the Maya scene.\n2. Run the script.\n\"\"\"\n\nimport maya.cmds as cmds\n\nsel = cmds.ls(sl=1)\n\nfor obj in sel:\n    get_top_parent = cmds.listRelatives(obj,p=1,f=1)[0].split('|')[1]\n    all_descendents = cmds.listRelatives(get_top_parent,ad=1)\n    jnts = cmds.ls(all_descendents, type='joint')\n\nfor jnt in jnts:\n    if cmds.getAttr(\"{}.drawStyle\".format(jnt)) == 0:\n        cmds.setAttr(\"{}.drawStyle\".format(jnt), 2)\n    else:\n        cmds.setAttr(\"{}.drawStyle\".format(jnt), 0)\n" 
+        -command "\"\"\"\nThis script toggles on an off the drawing style of joints in the scene.\n\nUsage:\n1. Select the objects you want to affect in the Maya scene.\n2. Run the script.\n\"\"\"\n\nimport maya.cmds as cmds\nimport maya.OpenMaya as OpenMaya\n\ndef jnt_vis():\n    \n    sel = cmds.ls(sl=1, l=1)\n\n    if not sel: \n        OpenMaya.MGlobal.displayError(\"Please select an obj\")\n        return\n        \n    for obj in sel:\n        get_root = obj.split('|')[1]\n        all_descendents = cmds.listRelatives(get_root, f=1, ad=1)\n        all_descendents.append(get_root)\n        jnts = cmds.ls(all_descendents, type='joint')\n\n        for jnt in jnts:\n            if cmds.getAttr(\"{}.drawStyle\".format(jnt)) == 0:\n                cmds.setAttr(\"{}.drawStyle\".format(jnt), 2)\n            else:\n                cmds.setAttr(\"{}.drawStyle\".format(jnt), 0)\n                        \njnt_vis()\n" 
+        -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "\"\"\"\nThis script toggles on an off the visibility of all shape.\n\nUsage:\n1. Select the objects you want to affect in the Maya scene.\n2. Run the script.\n\"\"\"\n\nimport maya.cmds as cmds\nimport maya.OpenMaya as OpenMaya\n\ndef shape_vis():\n    \n    sel = cmds.ls(sl=1, l=1)\n\n    if not sel: \n        OpenMaya.MGlobal.displayError(\"Please select an obj\")\n        return\n        \n    for obj in sel:\n        get_root = obj.split('|')[1]\n        all_descendents = cmds.listRelatives(get_root, f=1, ad=1)\n        all_descendents.append(get_root)\n        shapes = cmds.ls(all_descendents, type='shape')\n\n        for shape in shapes:\n            if cmds.getAttr(\"{}.visibility\".format(shape)) == 0:\n                cmds.setAttr(\"{}.visibility\".format(shape), 1)\n            else:\n                cmds.setAttr(\"{}.visibility\".format(shape), 0)\n                        \nshape_vis()\n" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "\"\"\"\nThis script toggles on an off the visibility of all shape.\n\n..." 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "C:/Users/User/Documents/maya/2022/prefs/icons/ctrl_vis.png" 
+        -image1 "C:/Users/User/Documents/maya/2022/prefs/icons/ctrl_vis.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "\"\"\"\nThis script toggles on an off the visibility of all shape.\n\nUsage:\n1. Select the objects you want to affect in the Maya scene.\n2. Run the script.\n\"\"\"\n\nimport maya.cmds as cmds\nimport maya.OpenMaya as OpenMaya\n\ndef shape_vis():\n    \n    sel = cmds.ls(sl=1, l=1)\n\n    if not sel: \n        OpenMaya.MGlobal.displayError(\"Please select an obj\")\n        return\n        \n    for obj in sel:\n        get_root = obj.split('|')[1]\n        all_descendents = cmds.listRelatives(get_root, f=1, ad=1)\n        all_descendents.append(get_root)\n        shapes = cmds.ls(all_descendents, type='shape')\n\n        for shape in shapes:\n            if cmds.getAttr(\"{}.visibility\".format(shape)) == 0:\n                cmds.setAttr(\"{}.visibility\".format(shape), 1)\n            else:\n                cmds.setAttr(\"{}.visibility\".format(shape), 0)\n                        \nshape_vis()\n" 
         -sourceType "python" 
         -commandRepeatable 1
         -flat 1
